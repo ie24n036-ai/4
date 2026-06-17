@@ -1,45 +1,38 @@
-from flask import Flask, render_template_string
-import pymysql
+from flask import Flask
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    conn = pymysql.connect(
-        host="localhost",
-        user="root",
-        password="あなたのパスワード",
-        database="medical_inventory"
-    )
-
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM products")
-    products = cursor.fetchall()
-
-    conn.close()
-
-    html = """
+    return """
     <h1>医療用品在庫管理システム</h1>
+
     <table border="1">
         <tr>
-            <th>ID</th>
             <th>商品名</th>
             <th>在庫数</th>
             <th>発注点</th>
-            <th>価格</th>
         </tr>
-        {% for p in products %}
         <tr>
-            <td>{{ p[0] }}</td>
-            <td>{{ p[1] }}</td>
-            <td>{{ p[2] }}</td>
-            <td>{{ p[3] }}</td>
-            <td>{{ p[4] }}</td>
+            <td>マスク</td>
+            <td>100</td>
+            <td>20</td>
         </tr>
-        {% endfor %}
+        <tr>
+            <td>消毒液</td>
+            <td>50</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>体温計</td>
+            <td>3</td>
+            <td>5</td>
+        </tr>
     </table>
+
+    <h2>⚠ 在庫不足商品</h2>
+    <p>体温計（在庫3、発注点5）</p>
     """
-    return render_template_string(html, products=products)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
