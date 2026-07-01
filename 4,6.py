@@ -108,38 +108,168 @@ def index():
         shortage_items = "<p>現在、在庫不足の商品はありません。</p>"
 
     # 画面全体のHTML
+        # 画面全体のHTML
     return f"""
-    <h1>医療用品在庫管理システム</h1>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>医療用品在庫管理システム</title>
 
-    <form method="POST">
-        <input type="hidden" name="action" value="update">
-        <table border="1" cellpadding="5" style="border-collapse: collapse;">
-            <tr>
-                <th>商品名</th>
-                <th>在庫数</th>
-                <th>発注点</th>
-                <th>操作</th>
-            </tr>
-            {table_rows}
-        </table>
-        <br>
-        <button type="submit" style="padding: 5px 15px; font-weight: bold;">データを更新する（名前・個数の変更・削除）</button>
-    </form>
+<style>
+body {{
+    font-family: "Yu Gothic", sans-serif;
+    background: linear-gradient(to right,#d7f0ff,#eef8ff);
+    margin:0;
+    padding:30px;
+}}
 
-    <hr style="margin: 20px 0;">
+.container {{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}}
 
-    <h2>➕ 新しい商品を追加する</h2>
-    <form method="POST" style="background: #f5f5f5; padding: 15px; border-radius: 5px; display: inline-block;">
-        <input type="hidden" name="action" value="add">
-        <label>商品名: <input type="text" name="add_name" required style="width: 120px;"></label>
-        <label style="margin-left: 10px;">在庫数: <input type="number" name="add_stock" value="0" min="0" style="width: 60px;"></label>
-        <label style="margin-left: 10px;">発注点: <input type="number" name="add_threshold" value="0" min="0" style="width: 60px;"></label>
-        <button type="submit" style="margin-left: 15px; padding: 3px 10px;">追加</button>
-    </form>
+h1 {{
+    text-align:center;
+    color:#0066aa;
+}}
 
-    <h2>⚠ 在庫不足・警告商品</h2>
-    {shortage_items}
-    """
+h2 {{
+    color:#0066aa;
+}}
+
+table {{
+    width:100%;
+    border-collapse:collapse;
+}}
+
+th {{
+    background:#2196F3;
+    color:white;
+    padding:12px;
+}}
+
+td {{
+    padding:10px;
+    text-align:center;
+}}
+
+tr:nth-child(even) {{
+    background:#f5f5f5;
+}}
+
+input {{
+    padding:5px;
+    border-radius:5px;
+    border:1px solid #aaa;
+}}
+
+button {{
+    background:#2196F3;
+    color:white;
+    border:none;
+    border-radius:6px;
+    padding:8px 15px;
+    cursor:pointer;
+}}
+
+button:hover {{
+    background:#0b72c9;
+}}
+
+.shortage {{
+    background:#fff3f3;
+    border-left:8px solid red;
+    padding:15px;
+    border-radius:10px;
+}}
+
+.addbox {{
+    background:#f0f9ff;
+    padding:15px;
+    border-radius:10px;
+}}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🏥 医療用品在庫管理システム 💊</h1>
+
+<div style="text-align:center;">
+<img src="https://cdn-icons-png.flaticon.com/512/2785/2785544.png" width="100">
+</div>
+
+<form method="POST">
+<input type="hidden" name="action" value="update">
+
+<table border="1">
+<tr>
+<th>商品名</th>
+<th>在庫数</th>
+<th>発注点</th>
+<th>操作</th>
+</tr>
+
+{table_rows}
+
+</table>
+
+<br>
+
+<button type="submit">
+💾 データを更新する
+</button>
+
+</form>
+
+<hr>
+
+<h2>➕ 新しい商品を追加する</h2>
+
+<div class="addbox">
+
+<form method="POST">
+
+<input type="hidden" name="action" value="add">
+
+商品名：
+<input type="text" name="add_name" required>
+
+在庫数：
+<input type="number" name="add_stock" value="0">
+
+発注点：
+<input type="number" name="add_threshold" value="0">
+
+<button type="submit">
+追加
+</button>
+
+</form>
+
+</div>
+
+<h2>⚠ 在庫不足商品</h2>
+
+<div class="shortage">
+
+{shortage_items}
+
+</div>
+
+</div>
+
+</body>
+</html>
+"""
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
