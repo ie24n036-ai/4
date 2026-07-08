@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, url_for
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-app = Flask(**name**)
+app = Flask(__name__)
 
 # 日本時間を指定
 
