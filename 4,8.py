@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, url_for
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-app = Flask(__name__)
+app = Flask(**name**)
 
 # 日本時間を指定
 
@@ -283,29 +283,28 @@ button:hover {{
 <div class="update-display">{update_status_str}</div>
 
 <div style="text-align:center;">
-<img src="https://cdn-icons-png.flaticon.com/512/2785/2785544.png" width="100">
+    <img src="https://cdn-icons-png.flaticon.com/512/2785/2785544.png" width="100">
 </div>
 
 <form method="POST">
-<input type="hidden" name="action" value="update">
+    <input type="hidden" name="action" value="update">
 
+```
 <table border="1">
-<tr>
-<th>商品名</th>
-<th>在庫数</th>
-<th>発注点</th>
-<th>操作</th>
-</tr>
+    <tr>
+        <th>商品名</th>
+        <th>在庫数</th>
+        <th>発注点</th>
+        <th>操作</th>
+    </tr>
 
-{table_rows}
-
+    {table_rows}
 </table>
 
 <br>
 
-<button type="submit">
-💾 データを更新する
-</button>
+<button type="submit">💾 データを更新する</button>
+```
 
 </form>
 
@@ -314,31 +313,29 @@ button:hover {{
 <h2>➕ 新しい商品を追加する</h2>
 
 <div class="addbox">
+    <form method="POST">
+        <input type="hidden" name="action" value="add">
 
-<form method="POST">
+```
+    商品名：
+    <input type="text" name="add_name" required>
 
-<input type="hidden" name="action" value="add">
+    在庫数：
+    <input type="number" name="add_stock" value="0" min="0">
 
-商品名： <input type="text" name="add_name" required>
+    発注点：
+    <input type="number" name="add_threshold" value="0" min="0">
 
-在庫数： <input type="number" name="add_stock" value="0" min="0">
-
-発注点： <input type="number" name="add_threshold" value="0" min="0">
-
-<button type="submit">
-追加
-</button>
-
+    <button type="submit">追加</button>
 </form>
+```
 
 </div>
 
 <h2>⚠ 在庫不足商品</h2>
 
 <div class="shortage">
-
-{shortage_items}
-
+    {shortage_items}
 </div>
 
 </div>
